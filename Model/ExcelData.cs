@@ -78,12 +78,14 @@ namespace ClientBaseMigration
                 wb = a.Workbooks.Open(filename);
                 int k = wb.Worksheets.Count < 20 ? wb.Worksheets.Count : 20;
 
-                k = 1;
+                //k = 1;
                 for (int i = 0; i < k; i++)
                 {
                     currentSheet = wb.Worksheets[i + 1];
-                    Sheet sheet = new Sheet();
-                    sheet.Name = currentSheet.Name;
+                    Sheet sheet = new Sheet
+                    {
+                        Name = currentSheet.Name
+                    };
 
                     var lastCell = currentSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell);//последнюю ячейку
                                                                                                         // размеры базы

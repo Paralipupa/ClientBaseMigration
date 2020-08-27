@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ClientBase;
 using ClientBaseMigration.Properties;
@@ -50,20 +51,38 @@ namespace ClientBaseMigration
         public ICommand BusyCommand => new Command(
             _ =>
             {
-                BusyViewModel vm = new BusyViewModel( 100, 100);
-                vm.ShowBusy();
-                System.Threading.Thread.Sleep(10000);
-                vm.HideBusy();
+                Task.Run(() =>
+                {
+                    BusyViewModel vm = new BusyViewModel(150, 150, 100, 100);
+                    vm.ShowBusy();
+                    System.Threading.Thread.Sleep(1000);
+                    vm.HideBusy();
+                });
             });
 
         public ICommand ToggleClickCommand => new Command(
             _ =>
             {
+                Task.Run(delegate
+                {
+                    BusyViewModel vm = new BusyViewModel(100, 100, 100, 100);
+                    vm.ShowBusy();
+                    System.Threading.Thread.Sleep(5000);
+                    vm.HideBusy();
+                });
                 Task.Run(() =>
                 {
-                    IsClick = !IsClick;
-                    System.Threading.Thread.Sleep(5000);
-                    IsClick = !IsClick;
+                    BusyViewModel vm = new BusyViewModel(200, 200, 200, 200);
+                    vm.ShowBusy();
+                    System.Threading.Thread.Sleep(3000);
+                    vm.HideBusy();
+                });
+                Task.Run(() =>
+                {
+                    BusyViewModel vm = new BusyViewModel(300, 300, 300, 300);
+                    vm.ShowBusy();
+                    System.Threading.Thread.Sleep(4000);
+                    vm.HideBusy();
                 });
 
             });
@@ -73,16 +92,19 @@ namespace ClientBaseMigration
             {
                 Task.Run(() =>
                {
-                   BusyViewModel vm = new BusyViewModel(100, 100);
+                   BusyViewModel vm = new BusyViewModel(100, 100,100,100);
                    vm.ShowBusy();
                    IsClick = !IsClick;
                    Message = "Процесс...";
                    string filename = Settings.Default.PathExcelFile;
                    Database = new DataBaseNew();
-                   if (Database.ReadStruct(filename))
+                   if (Database.ReadFromExcel(filename))
                    {
-                       Database.GenCreateTable();
-                       Database.JSonSerialization();
+                       if (Database.GenMigrate())
+                       {
+                           Database.JSonSerialization();
+                       }
+
 
                    }
                    IsClick = !IsClick;
@@ -94,7 +116,11 @@ namespace ClientBaseMigration
             },
             _ => { return IsClick; }
             );
+    
+        private void Busy()
+        {
 
+        }
 
     }
 }

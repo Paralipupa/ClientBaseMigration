@@ -42,19 +42,19 @@
         <DockPanel Grid.Row="1" Grid.Column="0">
             <StackPanel  DockPanel.Dock="Top"  Orientation="Horizontal" >
                 <TextBlock Text="подключение к MySQL"/>
-                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=PathBaseED2, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=ConnectionString, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel  DockPanel.Dock="Top"  Orientation="Horizontal">
                 <TextBlock Text="База ЭД2"/>
-                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=PathBaseCTM, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=PathBaseED2, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel  DockPanel.Dock="Top"  Orientation="Horizontal" >
                 <TextBlock Text="База СТМ"/>
-                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=PathBaseNew, Mode=TwoWay}"/>
+                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=PathBaseCTM, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel  DockPanel.Dock="Top"  Orientation="Horizontal">
                 <TextBlock Text="База новая"/>
-                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=ConnectionString, Mode=TwoWay}" />
+                <TextBox Text="{Binding Source={x:Static p:Settings.Default}, Path=PathBaseNew, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel  DockPanel.Dock="Top"  Orientation="Horizontal">
                 <TextBlock Text="Описание структуры"/>

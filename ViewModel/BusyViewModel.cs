@@ -10,31 +10,29 @@ namespace ClientBaseMigration
     {
         BusyWindow _busyWindow = null;
 
-        private float _left;
-        public float Left
+        private double _left;
+        public double Left
         {
             get { return _left; }
             set { _left = value; }
         }
 
-        private float _top;
-            
-        public float Top
+        private double _top;
+        public double Top
         {
             get { return _top; }
             set { _top = value; }
         }
 
-        private float _width;
-        public float Width
+        private double _width;
+        public double Width
         {
             get { return _width; }
             set { _width = value; }
         }
 
-        private float _height;
-
-        public float Height
+        private double _height;
+        public double Height
         {
             get { return _height; }
             set { _height = value; }
@@ -42,24 +40,27 @@ namespace ClientBaseMigration
 
         object _busyWindowSync = new object();
 
-        public BusyViewModel(float left, float top) 
+        public BusyViewModel(double left, double top, double width = 300, double height = 300)
         {
-            Left = left;
-            Top = top;
+            _left = left;
+            _top = top;
+            _width = width;
+            _height = height;
         }
 
         public void ShowBusy()
         {
-            lock (_busyWindowSync)
+            //lock (_busyWindowSync)
+            //{
+            if (_busyWindow == null)
             {
-                if (_busyWindow == null)
-                {
-                    Thread newWindowThread = new Thread(new ThreadStart(AnimationThreadStartingPoint));
-                    newWindowThread.SetApartmentState(ApartmentState.STA);
-                    newWindowThread.IsBackground = true;
-                    newWindowThread.Start();
-                }
+                Thread newWindowThread = new Thread(AnimationThreadStartingPoint);
+                newWindowThread.SetApartmentState(ApartmentState.STA);
+                newWindowThread.IsBackground = true;
+                newWindowThread.Name = "Buzy";
+                newWindowThread.Start();
             }
+            //}
         }
 
         private void AnimationThreadStartingPoint()
@@ -68,7 +69,14 @@ namespace ClientBaseMigration
             {
                 if (_busyWindow == null)
                 {
-                    _busyWindow = new BusyWindow();
+                    _busyWindow = new BusyWindow
+                    {
+                        DataContext = this,
+                        Left = Left,
+                        Top = Top,
+                        Width = Width,
+                        Height = Height
+                    };
                     _busyWindow.Show();
                 }
             }
@@ -82,6 +90,9 @@ namespace ClientBaseMigration
                 if (_busyWindow != null)
                 {
                     _busyWindow.Dispatcher.BeginInvoke((Action)_busyWindow.Close);
+
+
+
                 }
             }
         }

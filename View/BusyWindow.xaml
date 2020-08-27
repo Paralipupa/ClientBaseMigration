@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientBaseMigration"
         mc:Ignorable="d"
-        Title="BusyWindow" Height="300" Width="300" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
+        Title="BusyWindow" Height="{Binding Path=Height}" Width="{Binding Path=Width}" WindowStyle="None" Background="Transparent" AllowsTransparency="True"
+        Top="{Binding Path=Top}" Left="{Binding Path=Left}">
     <Grid>
         <Grid Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Canvas RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" >
